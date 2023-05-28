@@ -31,7 +31,7 @@ public class searchFunction_stepDefinitions {
             WebElement happyWord = result.findElement(By.className("item-description"));
             String description = happyWord.getText();
 
-            if (description.contains("cucumber")) {
+            if (description.contains("happy")) {
                 System.out.println("The description contains the word 'happy'");
             } else {
                 System.out.println("The description does not contain the word 'happy'");

@@ -19,7 +19,7 @@ import java.util.Set;
 public class lunaEur_stepDefinitions {
 
     lunaEur lunaEurPage = new lunaEur();
-    String parentWindowHandle;
+    //String parentWindowHandle;
     //String mainHandle;
     //WebDriverWait wait=new WebDriverWait(Driver.getDriver(),3);
 
@@ -39,24 +39,29 @@ public class lunaEur_stepDefinitions {
         actions.moveToElement(lunaEurPage.lunaEur2).perform();
         //lunaEurPage.lunaEur1.isDisplayed();
         //lunaEurPage.lunaEur2.isDisplayed();
-        if (lunaEurPage.lunaEur1.isDisplayed()) {
+        Assert.assertTrue(lunaEurPage.lunaEur1.isDisplayed());
+        Assert.assertTrue(lunaEurPage.lunaEur2.isDisplayed());
+       /* if (lunaEurPage.lunaEur1.isDisplayed()) {
             System.out.println("Document is visible");
         } else {
             System.out.println("Document is not visible");
         }
+
+        */
     }
 
     @When("Users can view the document and verify that it is opened on a new tab")
     public void users_can_view_the_document_and_verify_that_it_is_opened_on_a_new_tab() {
 
-        //String parentWindowHandle = Driver.getDriver().getWindowHandle();
+        String parentWindowHandle = Driver.getDriver().getWindowHandle();
         lunaEurPage.viewThisDocument1.click();
+
 
         Set<String> windowHandles = Driver.getDriver().getWindowHandles();
 
         // Switch to the new tab/window
         for (String windowHandle : windowHandles) {
-            if (!windowHandle.equals(parentWindowHandle)) {
+           if (!windowHandle.equals(parentWindowHandle)) {
                 Driver.getDriver().switchTo().window(windowHandle);
                 break;
             }
@@ -65,12 +70,18 @@ public class lunaEur_stepDefinitions {
         // Verify that the document is opened on a new tab
         String currentUrl = Driver.getDriver().getCurrentUrl();
 
+        Assert.assertTrue(currentUrl.contains("pdf"));
+/*
         if (currentUrl.contains(".pdf")) {
             System.out.println("Document is opened on a new tab.");
         } else {
             System.out.println("Document is not opened on a new tab.");
         }
 
+ */
+
+
+        Driver.getDriver().switchTo().window(parentWindowHandle);
 
 /*
         String mainHandle=Driver.getDriver().getWindowHandle();
@@ -133,7 +144,7 @@ public class lunaEur_stepDefinitions {
 
 
         //Driver.getDriver().switchTo().window(windowHandles.iterator().next());
-        Driver.getDriver().switchTo().window(parentWindowHandle);
+       // Driver.getDriver().switchTo().window(parentWindowHandle);
         lunaEurPage.download1.click();
         Thread.sleep(7000);
 

@@ -10,6 +10,9 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class Driver {
@@ -53,8 +56,12 @@ public class Driver {
                 case "chrome":
                     ChromeOptions options = new ChromeOptions();
                     options.addArguments("--remote-allow-origins=*");
+                    String downloadDir = System.getProperty("user.dir")+ File.separator+"src"+File.separator +"test"+File.separator+"resources"+File.separator+"downloads";
+                    Map<String, Object> prefs = new HashMap<>();
+                    prefs.put("download.default_directory", downloadDir);
+                    options.setExperimentalOption("prefs", prefs);
                     WebDriverManager.chromedriver().setup();
-                    driverPool.set(new ChromeDriver());
+                    driverPool.set(new ChromeDriver(options));
                     driverPool.get().manage().window().maximize();
                     driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                     break;

@@ -5,6 +5,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.io.File;
+
 public class lunaEur {
 
     public lunaEur(){
@@ -41,10 +43,9 @@ public class lunaEur {
 
 
     public static boolean verifyDocumentDownloaded(String downloadUrl) {
-        // Implement your own logic to verify the document download
-        // You can check if the file exists in the specified download directory, or validate the downloaded file in any other way
-        // Return true if the document is downloaded successfully, false otherwise
-        return true;
+        String downloadedFile = System.getProperty("user.dir")+ File.separator+"src"+ File.separator+"test"+File.separator+"resources"+File.separator+"downloads"+File.separator+"D-S006VT_-.pdf";
+        File file = new File(downloadedFile);
+        return file.exists();
     }
 
 
