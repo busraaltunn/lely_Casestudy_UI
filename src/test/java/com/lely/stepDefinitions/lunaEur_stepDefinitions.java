@@ -49,7 +49,7 @@ public class lunaEur_stepDefinitions {
     @When("Users can view the document and verify that it is opened on a new tab")
     public void users_can_view_the_document_and_verify_that_it_is_opened_on_a_new_tab() {
 
-        String parentWindowHandle = Driver.getDriver().getWindowHandle();
+        //String parentWindowHandle = Driver.getDriver().getWindowHandle();
         lunaEurPage.viewThisDocument1.click();
 
         Set<String> windowHandles = Driver.getDriver().getWindowHandles();
