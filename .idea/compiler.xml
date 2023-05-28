@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="EU10-CucumberJunit" />
+        <module name="lely_Casestudy_UI" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="lely_Casestudy_UI" target="11" />
+      <module name="EU10-CucumberJunit" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

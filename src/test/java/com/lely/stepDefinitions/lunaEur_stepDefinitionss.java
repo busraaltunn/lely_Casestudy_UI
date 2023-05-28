@@ -16,12 +16,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.io.File;
 import java.util.Set;
 
-public class lunaEur_stepDefinitions {
+public class lunaEur_stepDefinitionss {
 
     lunaEur lunaEurPage = new lunaEur();
-    //String parentWindowHandle;
-    //String mainHandle;
-    //WebDriverWait wait=new WebDriverWait(Driver.getDriver(),3);
+    public static String parentWindowHandle;
+    WebDriverWait wait=new WebDriverWait(Driver.getDriver(),3);
 
     @Given("user is on the technical document page")
     public void user_is_on_the_technical_document_page() {
@@ -35,10 +34,8 @@ public class lunaEur_stepDefinitions {
         //wait.until(ExpectedConditions.elementToBeClickable(lunaEurPage.dropdownButtonButNotDropdown));
         lunaEurPage.dropdownButtonButNotDropdown.click();
         lunaEurPage.lunaEurText.click();
-        Actions actions = new Actions(Driver.getDriver());
-        actions.moveToElement(lunaEurPage.lunaEur2).perform();
-        //lunaEurPage.lunaEur1.isDisplayed();
-        //lunaEurPage.lunaEur2.isDisplayed();
+        //Actions actions = new Actions(Driver.getDriver());
+        //actions.moveToElement(lunaEurPage.lunaEur2).perform();
         Assert.assertTrue(lunaEurPage.lunaEur1.isDisplayed());
         Assert.assertTrue(lunaEurPage.lunaEur2.isDisplayed());
        /* if (lunaEurPage.lunaEur1.isDisplayed()) {
@@ -53,90 +50,40 @@ public class lunaEur_stepDefinitions {
     @When("Users can view the document and verify that it is opened on a new tab")
     public void users_can_view_the_document_and_verify_that_it_is_opened_on_a_new_tab() {
 
-        String parentWindowHandle = Driver.getDriver().getWindowHandle();
+
         lunaEurPage.viewThisDocument1.click();
 
 
         Set<String> windowHandles = Driver.getDriver().getWindowHandles();
+        parentWindowHandle = Driver.getDriver().getWindowHandle();
 
         // Switch to the new tab/window
         for (String windowHandle : windowHandles) {
-           if (!windowHandle.equals(parentWindowHandle)) {
+            System.out.println("window: "+windowHandle);
+            System.out.println("parent "+ parentWindowHandle);
+
+            if (!windowHandle.equals(parentWindowHandle)) {
                 Driver.getDriver().switchTo().window(windowHandle);
                 break;
+
             }
         }
 
+
         // Verify that the document is opened on a new tab
+
         String currentUrl = Driver.getDriver().getCurrentUrl();
 
         Assert.assertTrue(currentUrl.contains("pdf"));
-/*
+
         if (currentUrl.contains(".pdf")) {
             System.out.println("Document is opened on a new tab.");
         } else {
             System.out.println("Document is not opened on a new tab.");
         }
 
- */
+ 
 
-
-        Driver.getDriver().switchTo().window(parentWindowHandle);
-
-/*
-        String mainHandle=Driver.getDriver().getWindowHandle();
-
-        System.out.println("mainHandle = " + mainHandle);
-
-        lunaEurPage.viewThisDocument1.click();
-
-        for(String each: Driver.getDriver().getWindowHandles()){
-            Driver.getDriver().switchTo().window(each);
-        }
-
- */
-
-        /*
-        lunaEurPage.viewThisDocument1.click();
-
-        Set<String> windowHandles = Driver.getDriver().getWindowHandles();
-
-
-        for (String windowHandle : windowHandles) {
-            Driver.getDriver().switchTo().window(windowHandle);
-        }
-*/
-        /*
-        String currentUrl = Driver.getDriver().getCurrentUrl();
-
-
-        if (currentUrl.contains(".pdf")) {
-            System.out.println("PDF opened correctly");
-        } else {
-            System.out.println("The PDF could not be opened or an incorrect page was opened");
-        }
-
-         */
-
-
-        /*
-        String mainHandle=Driver.getDriver().getWindowHandle();
-
-        System.out.println("mainHandle = " + mainHandle);
-
-        lunaEurPage.viewThisDocument1.click();
-
-        for(String each: Driver.getDriver().getWindowHandles()){
-            Driver.getDriver().switchTo().window(each);
-            System.out.println("Current title while switchig window: "+ Driver.getDriver().getTitle());
-        }
-
-        String expectedTitleAfterClick= "D-S006.0911VT.fm";
-        String actualTitle= Driver.getDriver().getTitle();
-
-        Assert.assertEquals(expectedTitleAfterClick, actualTitle);
-
-*/
     }
 
     @When("Users can  return to the previous tab and download the document")
@@ -144,7 +91,7 @@ public class lunaEur_stepDefinitions {
 
 
         //Driver.getDriver().switchTo().window(windowHandles.iterator().next());
-       // Driver.getDriver().switchTo().window(parentWindowHandle);
+        Driver.getDriver().switchTo().window(parentWindowHandle);
         lunaEurPage.download1.click();
         Thread.sleep(7000);
 
@@ -152,19 +99,7 @@ public class lunaEur_stepDefinitions {
 
     @Then("Users should verify that it is downloaded")
     public void users_should_verify_that_it_is_downloaded() {
-        /*
-        String downloadPath="/Users/t/Downloads/D-S006VT_-.pdf";
 
-        String fileName = "D-S006VT_-.pdf"; // Replace with the actual file name
-        String filePath = downloadPath + File.separator + fileName;
-        File file = new File(filePath);
-        if (file.exists()) {
-            System.out.println("Yes, file is dowloaded ");
-        } else {
-            System.out.println("File cannot be downloaded");
-        }
-    }
-    */
         String downloadUrl = lunaEurPage.viewThisDocument1.getAttribute("href");
 
         boolean isDownloaded = lunaEurPage.verifyDocumentDownloaded(downloadUrl);
